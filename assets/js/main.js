@@ -1,32 +1,42 @@
 /* ==========================================================
+   GLOBAL ROOT PATH FOR GITHUB PAGES
+========================================================== */
+const ROOT = "/hristo-and-sara-wedding";
+
+/* ==========================================================
    IMAGE LOADER (JSON-BASED)
 ========================================================== */
 async function loadImages() {
-    const res = await fetch("assets/data/images.json");
+    const res = await fetch(`${ROOT}/assets/data/images.json`);
     const data = await res.json();
 
     /* HERO BACKGROUNDS */
-    document.documentElement.style.setProperty("--hero-desktop",
-        `url('assets/images/hero/${data.hero[0]}')`);
-    document.documentElement.style.setProperty("--hero-mobile",
-        `url('assets/images/hero/${data.hero[1]}')`);
+    document.documentElement.style.setProperty(
+        "--hero-desktop",
+        `url('${ROOT}/assets/images/hero/${data.hero[0]}')`
+    );
+
+    document.documentElement.style.setProperty(
+        "--hero-mobile",
+        `url('${ROOT}/assets/images/hero/${data.hero[1]}')`
+    );
 
     /* SLIDESHOW */
     const slideshow = document.getElementById("slideshow");
     data.slideshow.forEach((file, i) => {
         let img = document.createElement("img");
-        img.src = `assets/images/slideshow/${file}`;
+        img.src = `${ROOT}/assets/images/slideshow/${file}`;
         if (i === 0) img.classList.add("active");
         slideshow.appendChild(img);
     });
 
-    /* WEDDING PARTY (COMBINED) */
+    /* WEDDING PARTY */
     const weddingparty = document.getElementById("weddingparty");
 
     data.bridesmaids.forEach(file => {
         weddingparty.innerHTML += `
             <div class="party-card animate-up">
-                <img src="assets/images/bridesmaids/${file}">
+                <img src="${ROOT}/assets/images/bridesmaids/${file}">
                 <h3>Bridesmaid</h3>
             </div>
         `;
@@ -35,7 +45,7 @@ async function loadImages() {
     data.bestmen.forEach(file => {
         weddingparty.innerHTML += `
             <div class="party-card animate-up">
-                <img src="assets/images/bestmen/${file}">
+                <img src="${ROOT}/assets/images/bestmen/${file}">
                 <h3>Best Man</h3>
             </div>
         `;
@@ -45,7 +55,7 @@ async function loadImages() {
     const gallery = document.getElementById("gallery");
     data.gallery.forEach(file => {
         gallery.innerHTML += `
-            <img class="animate-up" src="assets/images/gallery/${file}">
+            <img class="animate-up" src="${ROOT}/assets/images/gallery/${file}">
         `;
     });
 }
@@ -125,7 +135,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
 /* ==========================================================
-   TOOLTIP LOGIC FOR MENUS
+   TOOLTIP LOGIC
 ========================================================== */
 function attachTooltip(select) {
     const wrapper = select.parentElement;
@@ -138,7 +148,6 @@ function attachTooltip(select) {
         tooltip.style.opacity = tip ? "1" : "0";
     });
 
-    // Mobile tap gesture
     select.addEventListener("touchstart", () => {
         const option = select.selectedOptions[0];
         tooltip.textContent = option.dataset.tooltip || "";
@@ -153,7 +162,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
 /* ==========================================================
-   +1 LOGIC (SHOW/HIDE)
+   +1 LOGIC: SHOW / HIDE
 ========================================================== */
 document.addEventListener("DOMContentLoaded", () => {
     const plusOneSelect = document.getElementById("plusOneSelect");
@@ -178,7 +187,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
 /* ==========================================================
-   FORM VALIDATION (ENSURE +1 DATA IS COMPLETE)
+   FORM VALIDATION
 ========================================================== */
 document.getElementById("rsvpForm").addEventListener("submit", function (event) {
     const plusOneSelect = document.getElementById("plusOneSelect");
@@ -208,7 +217,7 @@ document.getElementById("rsvpForm").addEventListener("submit", function (event) 
 let currentLang = "en";
 
 async function loadTranslations(lang) {
-    const res = await fetch("assets/data/lang.json");
+    const res = await fetch(`${ROOT}/assets/data/lang.json`);
     const translations = await res.json();
 
     document.querySelectorAll("[data-i18n]").forEach(el => {

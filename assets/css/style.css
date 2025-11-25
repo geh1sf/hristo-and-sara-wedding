@@ -27,6 +27,7 @@ body {
     color: #4a3c32;
     font-weight: bold;
     text-decoration: none;
+    display: inline-block;
 }
 
 .btn-dark {
@@ -79,13 +80,15 @@ body {
 }
 
 /* ===========================================
-   HERO
+   HERO SECTION
 =========================================== */
 .hero {
     height: 95vh;
     display: flex;
     justify-content: center;
     align-items: center;
+
+    /* values supplied by JS via CSS variables */
     background-image: var(--hero-desktop);
     background-size: cover;
     background-position: center;
@@ -118,7 +121,7 @@ body {
     left: 50%;
     transform: translateX(-50%);
     opacity: 0;
-    transition: opacity 1.5s;
+    transition: opacity 1.5s ease;
 }
 
 .slideshow img.active {
@@ -209,7 +212,7 @@ body {
     position: absolute;
     left: 0;
     right: 0;
-    top: 110%;
+    top: 115%;
     background: #fff4e8;
     padding: 10px 12px;
     font-size: 14px;
@@ -223,7 +226,7 @@ body {
 }
 
 /* ===========================================
-   BASIC ANIMATION HELPERS
+   ANIMATION HELPERS
 =========================================== */
 .animate-up {
     opacity: 0;
