@@ -5,9 +5,9 @@ async function loadImages() {
 
     /* HERO */
     document.documentElement.style.setProperty("--hero-desktop",
-        `url('../images/hero/${data.hero[0]}')`);
+        `url('assets/images/hero/${data.hero[0]}')`);
     document.documentElement.style.setProperty("--hero-mobile",
-        `url('../images/hero/${data.hero[1]}')`);
+        `url('assets/images/hero/${data.hero[1]}')`);
 
     /* SLIDESHOW */
     const slideshow = document.getElementById("slideshow");
@@ -20,7 +20,7 @@ async function loadImages() {
 
     /* BRIDESMAIDS */
     const bridesmaids = document.getElementById("bridesmaids");
-    data.bridesmaids.forEach((file) => {
+    data.bridesmaids.forEach(file => {
         bridesmaids.innerHTML += `
             <div class="party-card">
                 <img src="assets/images/bridesmaids/${file}">
@@ -31,7 +31,7 @@ async function loadImages() {
 
     /* BEST MEN */
     const bestmen = document.getElementById("bestmen");
-    data.bestmen.forEach((file) => {
+    data.bestmen.forEach(file => {
         bestmen.innerHTML += `
             <div class="party-card">
                 <img src="assets/images/bestmen/${file}">
@@ -42,7 +42,7 @@ async function loadImages() {
 
     /* TIMELINE */
     const timeline = document.getElementById("timeline");
-    data.timeline.forEach((file) => {
+    data.timeline.forEach(file => {
         timeline.innerHTML += `
             <div class="timeline-item">
                 <img src="assets/images/timeline/${file}">
@@ -54,10 +54,8 @@ async function loadImages() {
 
     /* GALLERY */
     const gallery = document.getElementById("gallery");
-    data.gallery.forEach((file) => {
-        gallery.innerHTML += `
-            <img src="assets/images/gallery/${file}">
-        `;
+    data.gallery.forEach(file => {
+        gallery.innerHTML += `<img src="assets/images/gallery/${file}">`;
     });
 }
 
@@ -69,9 +67,34 @@ setInterval(() => {
     const slides = document.querySelectorAll("#slideshow img");
     if (slides.length < 2) return;
 
-    let active = document.querySelector("#slideshow img.active");
+    const active = document.querySelector("#slideshow img.active");
     active.classList.remove("active");
 
-    let next = active.nextElementSibling || slides[0];
+    const next = active.nextElementSibling || slides[0];
     next.classList.add("active");
 }, 3500);
+
+/* MUSIC AUTOPLAY FIX */
+document.addEventListener("DOMContentLoaded", () => {
+    const music = document.getElementById("bgMusic");
+    if (!music) return;
+
+    music.volume = 0.6;
+
+    // Try autoplay
+    music.play().catch(() => {
+        console.log("Autoplay blocked — waiting for interaction.");
+    });
+
+    // Start on first touch/click/scroll
+    const startMusic = () => {
+        music.play().catch(() => {});
+        document.removeEventListener("click", startMusic);
+        document.removeEventListener("touchstart", startMusic);
+        document.removeEventListener("scroll", startMusic);
+    };
+
+    document.addEventListener("click", startMusic);
+    document.addEventListener("touchstart", startMusic);
+    document.addEventListener("scroll", startMusic);
+});
