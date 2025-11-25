@@ -75,13 +75,3 @@ setInterval(() => {
     let next = active.nextElementSibling || slides[0];
     next.classList.add("active");
 }, 3500);
-
-/* YOUTUBE MUSIC */
-const ytButton = document.getElementById("playMusic");
-const ytPlayer = document.getElementById("ytplayer");
-
-ytButton.onclick = () => {
-    ytPlayer.src =
-        "https://www.youtube.com/embed/YOUTUBE_VIDEO_ID?autoplay=1&mute=0";
-    ytButton.style.display = "none";
-};
