@@ -1,44 +1,87 @@
-/* MUSIC AUTOPLAY + FALLBACK BUTTON */
-const bgMusic = document.getElementById("bgMusic");
-const playButton = document.getElementById("playButton");
+/* LOAD IMAGES FROM JSON */
+async function loadImages() {
+    const res = await fetch("assets/data/images.json");
+    const data = await res.json();
 
-bgMusic.play().catch(() => {
-    playButton.style.display = "block";
-});
+    /* HERO */
+    document.documentElement.style.setProperty("--hero-desktop",
+        `url('../images/hero/${data.hero[0]}')`);
+    document.documentElement.style.setProperty("--hero-mobile",
+        `url('../images/hero/${data.hero[1]}')`);
 
-playButton.onclick = () => {
-    bgMusic.play();
-    playButton.style.display = "none";
-};
-
-/* SLIDESHOW */
-let slideIndex = 0;
-const slides = document.querySelectorAll(".slideshow img");
-
-setInterval(() => {
-    slides[slideIndex].classList.remove("active");
-    slideIndex = (slideIndex + 1) % slides.length;
-    slides[slideIndex].classList.add("active");
-}, 3500);
-
-/* GOOGLE FORM SUBMISSION */
-const form = document.getElementById("rsvpForm");
-const confirmation = document.getElementById("confirmationMessage");
-
-form.addEventListener("submit", async (e) => {
-    e.preventDefault();
-
-    const url =
-"https://docs.google.com/forms/d/e/1FAIpQLSet2BgkiXZTPyLeDv6WjHlRDuEQlESiwHIpGWlthdYjEMu52Q/formResponse";
-
-    const formData = new FormData(form);
-
-    await fetch(url, {
-        method: "POST",
-        mode: "no-cors",
-        body: formData
+    /* SLIDESHOW */
+    const slideshow = document.getElementById("slideshow");
+    data.slideshow.forEach((file, i) => {
+        let img = document.createElement("img");
+        img.src = `assets/images/slideshow/${file}`;
+        if (i === 0) img.classList.add("active");
+        slideshow.appendChild(img);
     });
 
-    confirmation.style.display = "block";
-    form.reset();
-});
+    /* BRIDESMAIDS */
+    const bridesmaids = document.getElementById("bridesmaids");
+    data.bridesmaids.forEach((file) => {
+        bridesmaids.innerHTML += `
+            <div class="party-card">
+                <img src="assets/images/bridesmaids/${file}">
+                <h3>Bridesmaid</h3>
+            </div>
+        `;
+    });
+
+    /* BEST MEN */
+    const bestmen = document.getElementById("bestmen");
+    data.bestmen.forEach((file) => {
+        bestmen.innerHTML += `
+            <div class="party-card">
+                <img src="assets/images/bestmen/${file}">
+                <h3>Best Man</h3>
+            </div>
+        `;
+    });
+
+    /* TIMELINE */
+    const timeline = document.getElementById("timeline");
+    data.timeline.forEach((file) => {
+        timeline.innerHTML += `
+            <div class="timeline-item">
+                <img src="assets/images/timeline/${file}">
+                <h3>Event</h3>
+                <p>Description here.</p>
+            </div>
+        `;
+    });
+
+    /* GALLERY */
+    const gallery = document.getElementById("gallery");
+    data.gallery.forEach((file) => {
+        gallery.innerHTML += `
+            <img src="assets/images/gallery/${file}">
+        `;
+    });
+}
+
+/* RUN IMAGE LOADER */
+loadImages();
+
+/* SLIDESHOW */
+setInterval(() => {
+    const slides = document.querySelectorAll("#slideshow img");
+    if (slides.length < 2) return;
+
+    let active = document.querySelector("#slideshow img.active");
+    active.classList.remove("active");
+
+    let next = active.nextElementSibling || slides[0];
+    next.classList.add("active");
+}, 3500);
+
+/* YOUTUBE MUSIC */
+const ytButton = document.getElementById("playMusic");
+const ytPlayer = document.getElementById("ytplayer");
+
+ytButton.onclick = () => {
+    ytPlayer.src =
+        "https://www.youtube.com/embed/YOUTUBE_VIDEO_ID?autoplay=1&mute=0";
+    ytButton.style.display = "none";
+};
