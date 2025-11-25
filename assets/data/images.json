@@ -1,8 +1,8 @@
 {
     "hero": ["hero1.jpg", "hero2.jpg"],
     "slideshow": ["slideshow1.jpg", "slideshow2.jpg", "slideshow3.jpg"],
-    "bridesmaids": ["bridesmaid1.jpg", "bridesmaid2.jpg"],
-    "bestmen": ["bestman1.jpg", "bestman2.jpg"],
-    "timeline": ["timeline1.jpg", "timeline2.jpg", "timeline3.jpg"],
-    "gallery": ["gallery1.jpg", "gallery2.jpg", "gallery3.jpg"]
+    "bridesmaids": ["bridesmaid1.jpg"],
+    "bestmen": ["bestman1.jpg"],
+    "timeline": ["timeline1.jpg"],
+    "gallery": ["gallery1.jpg", "gallery2.jpg"]
 }
