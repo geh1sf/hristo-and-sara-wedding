@@ -146,12 +146,3 @@ body {
     color: green;
     font-weight: bold;
 }
-
-/* MUSIC BUTTON */
-#playMusic {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    background: white;
-    padding: 12px 20px;
-    border-
