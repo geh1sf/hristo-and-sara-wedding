@@ -1,16 +1,11 @@
-/* ==========================================================
-   GLOBAL ROOT PATH FOR GITHUB PAGES
-========================================================== */
+/* ROOT PATH */
 const ROOT = "/hristo-and-sara-wedding";
 
-/* ==========================================================
-   IMAGE LOADER (JSON-BASED)
-========================================================== */
+/* LOAD IMAGES */
 async function loadImages() {
     const res = await fetch(`${ROOT}/assets/data/images.json`);
     const data = await res.json();
 
-    /* HERO */
     document.documentElement.style.setProperty(
         "--hero-desktop",
         `url('${ROOT}/assets/images/hero/${data.hero[0]}')`
@@ -38,8 +33,7 @@ async function loadImages() {
             <div class="party-card animate-up">
                 <img src="${ROOT}/assets/images/bridesmaids/${file}">
                 <h3>Bridesmaid</h3>
-            </div>
-        `;
+            </div>`;
     });
 
     data.bestmen.forEach(file => {
@@ -47,8 +41,7 @@ async function loadImages() {
             <div class="party-card animate-up">
                 <img src="${ROOT}/assets/images/bestmen/${file}">
                 <h3>Best Man</h3>
-            </div>
-        `;
+            </div>`;
     });
 
     /* GALLERY */
@@ -59,12 +52,10 @@ async function loadImages() {
         `;
     });
 }
-
 loadImages();
 
-/* ==========================================================
-   SLIDESHOW
-========================================================== */
+
+/* SLIDESHOW ROTATION */
 setInterval(() => {
     const slides = document.querySelectorAll("#slideshow img");
     if (slides.length < 2) return;
@@ -76,9 +67,8 @@ setInterval(() => {
     next.classList.add("active");
 }, 3500);
 
-/* ==========================================================
-   COUNTDOWN
-========================================================== */
+
+/* COUNTDOWN */
 function startCountdown() {
     const target = new Date("June 27, 2026 17:00:00 GMT+0300").getTime();
 
@@ -102,12 +92,10 @@ function startCountdown() {
 
     }, 1000);
 }
-
 startCountdown();
 
-/* ==========================================================
-   MUSIC AUTOPLAY FIX
-========================================================== */
+
+/* MUSIC AUTOPLAY */
 document.addEventListener("DOMContentLoaded", () => {
     const music = document.getElementById("bgMusic");
     if (!music) return;
@@ -125,18 +113,16 @@ document.addEventListener("DOMContentLoaded", () => {
     document.addEventListener("touchstart", startMusic);
 });
 
-/* ==========================================================
-   TOOLTIP
-========================================================== */
+
+/* TOOLTIP */
 function attachTooltip(select) {
     const wrapper = select.parentElement;
     const tooltip = wrapper.querySelector(".tooltip");
 
     select.addEventListener("change", () => {
         const option = select.selectedOptions[0];
-        const tip = option.dataset.tooltip || "";
-        tooltip.textContent = tip;
-        tooltip.style.opacity = tip ? "1" : "0";
+        tooltip.textContent = option.dataset.tooltip || "";
+        tooltip.style.opacity = tooltip.textContent ? "1" : "0";
     });
 }
 
@@ -145,9 +131,8 @@ document.addEventListener("DOMContentLoaded", () => {
     attachTooltip(document.getElementById("plusOneMenu"));
 });
 
-/* ==========================================================
-   +1 LOGIC
-========================================================== */
+
+/* +1 LOGIC */
 document.addEventListener("DOMContentLoaded", () => {
     const plusOneSelect = document.getElementById("plusOneSelect");
     const plusOneName = document.getElementById("plusOneName");
@@ -169,32 +154,14 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 });
 
-/* ==========================================================
-   FORM VALIDATION
-========================================================== */
-document.getElementById("rsvpForm").addEventListener("submit", function (event) {
-    const plusOneSelect = document.getElementById("plusOneSelect");
-    const plusOneName = document.getElementById("plusOneName");
-    const plusOneMenu = document.getElementById("plusOneMenu");
 
-    if (plusOneSelect.value === "Yes") {
-        if (plusOneName.value.trim() === "") {
-            alert("Please enter the name of your +1.");
-            event.preventDefault();
-            return;
-        }
-
-        if (plusOneMenu.value === "") {
-            alert("Please select a menu for your +1.");
-            event.preventDefault();
-            return;
-        }
-    }
+/* FORM SUBMIT CONFIRMATION */
+document.getElementById("rsvpForm").addEventListener("submit", function () {
+    document.getElementById("confirmation").style.display = "block";
 });
 
-/* ==========================================================
-   LANGUAGE
-========================================================== */
+
+/* TRANSLATIONS */
 async function loadTranslations(lang) {
     const res = await fetch(`${ROOT}/assets/data/lang.json`);
     const translations = await res.json();
@@ -218,9 +185,8 @@ document.addEventListener("DOMContentLoaded", () => {
     loadTranslations("en");
 });
 
-/* ==========================================================
-   GSAP ANIMATIONS
-========================================================== */
+
+/* GSAP ANIMATIONS */
 document.addEventListener("DOMContentLoaded", () => {
     gsap.from(".hero-content", {
         opacity: 0,

@@ -7,6 +7,22 @@ body {
     text-align: center;
 }
 
+/* COUNTDOWN */
+#countdown-timer {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    margin-top: 20px;
+}
+
+#countdown-timer div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+
+/* SECTIONS */
 .section {
     padding: 80px 20px;
 }
@@ -18,15 +34,13 @@ body {
 
 /* HERO */
 .hero {
-    height: 95vh;
+    height: 90vh;
     display: flex;
     justify-content: center;
     align-items: center;
 
-    /* FALLBACK for GitHub Pages load */
+    /* fallback */
     background-image: url("/hristo-and-sara-wedding/assets/images/hero/hero1.jpg");
-
-    /* Will be overwritten by JS */
     background-image: var(--hero-desktop);
 
     background-size: cover;
@@ -46,6 +60,12 @@ body {
 }
 
 /* SLIDESHOW */
+.slideshow {
+    position: relative;
+    height: 420px;
+    margin-bottom: 80px;
+}
+
 .slideshow img {
     width: 100%;
     max-width: 700px;
@@ -68,7 +88,7 @@ body {
 }
 
 .party-card {
-    width: 240px;
+    width: 260px;
     background: #fff9f3;
     padding: 20px;
     border-radius: 12px;
@@ -85,6 +105,7 @@ body {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
     gap: 20px;
+    padding: 20px;
 }
 
 .gallery-grid img {
@@ -99,7 +120,7 @@ body {
 
 .tooltip {
     position: absolute;
-    bottom: -30px;
+    top: -28px;   /* FIXED */
     left: 0;
     right: 0;
     opacity: 0;
