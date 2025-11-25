@@ -3,83 +3,116 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Our Special Day 27.06.2026 — Hristo and Sara</title>
+<title>Hristo & Sara — 27 June 2026</title>
+
 <link rel="stylesheet" href="assets/css/style.css">
+
+<!-- GSAP Animations -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.3/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.3/ScrollTrigger.min.js"></script>
 </head>
 
 <body>
+
+<!-- LANGUAGE SWITCHER -->
+<div id="lang-switcher">
+    <button data-lang="en">EN</button>
+    <button data-lang="bg">BG</button>
+</div>
 
 <!-- MUSIC -->
 <audio id="bgMusic" autoplay loop>
     <source src="assets/music/song.mp3" type="audio/mpeg">
 </audio>
 
+<!-- COUNTDOWN -->
+<section id="countdown" class="countdown-section">
+    <h2 data-i18n="countdown_title">Countdown to Our Wedding</h2>
+    <div id="countdown-timer">
+        <div><span id="days">0</span><p data-i18n="days">Days</p></div>
+        <div><span id="hours">0</span><p data-i18n="hours">Hours</p></div>
+        <div><span id="minutes">0</span><p data-i18n="minutes">Minutes</p></div>
+        <div><span id="seconds">0</span><p data-i18n="seconds">Seconds</p></div>
+    </div>
+</section>
+
 <!-- HERO -->
-<header class="hero">
+<header class="hero animate-fade">
     <div class="hero-content">
-        <h1>Bound by Love, Blessed by the Sea</h1>
+        <h1 data-i18n="hero_title">Bound by Love, Blessed by the Sea</h1>
         <h2>Hristo & Sara</h2>
-        <h3>Sozopol • 27 June 2026 • Beach Bar Santa Marina</h3>
-        <a href="#rsvp" class="btn-light">RSVP</a>
+        <h3 data-i18n="hero_sub">Sozopol • 27 June 2026 • Beach Bar Santa Marina</h3>
+        <a href="#rsvp" class="btn-light" data-i18n="rsvp_btn">RSVP</a>
     </div>
 </header>
 
-<!-- SLIDESHOW -->
-<section class="section">
-    <h2 class="section-title">Our Love Story</h2>
+<!-- OUR LOVE STORY -->
+<section class="section animate-up">
+    <h2 class="section-title" data-i18n="love_story">Our Love Story</h2>
     <div id="slideshow" class="slideshow"></div>
 </section>
 
 <!-- WEDDING PARTY -->
-<section class="section">
-    <h2 class="section-title">Wedding Party</h2>
+<section class="section animate-up">
+    <h2 class="section-title" data-i18n="wedding_party">Wedding Party</h2>
 
-    <h3>Bridesmaids</h3>
+    <h3 data-i18n="bridesmaids">Bridesmaids</h3>
     <div id="bridesmaids" class="party-grid"></div>
 
-    <h3>Best Men</h3>
+    <h3 data-i18n="best_men">Best Men</h3>
     <div id="bestmen" class="party-grid"></div>
 </section>
 
 <!-- TIMELINE -->
-<section class="section">
-    <h2 class="section-title">Wedding Timeline</h2>
+<section class="section animate-up">
+    <h2 class="section-title" data-i18n="timeline">Wedding Timeline</h2>
     <div id="timeline" class="timeline"></div>
 </section>
 
 <!-- GALLERY -->
-<section class="section">
-    <h2 class="section-title">Gallery</h2>
+<section class="section animate-up">
+    <h2 class="section-title" data-i18n="gallery">Gallery</h2>
     <div id="gallery" class="gallery-grid"></div>
 </section>
 
+<!-- WEDDING SCHEDULE -->
+<section class="section animate-up" id="schedule">
+    <h2 class="section-title" data-i18n="schedule_title">Wedding Schedule</h2>
+
+    <div class="schedule-item"><strong>16:00</strong> — <span data-i18n="sched_16">Guests Arrive</span></div>
+    <div class="schedule-item"><strong>17:00</strong> — <span data-i18n="sched_17">Ceremony Begins</span></div>
+    <div class="schedule-item"><strong>18:00</strong> — <span data-i18n="sched_18">Photos & Drinks</span></div>
+    <div class="schedule-item"><strong>19:00</strong> — <span data-i18n="sched_19">Dinner</span></div>
+    <div class="schedule-item"><strong>21:00</strong> — <span data-i18n="sched_21">Party & Dancing</span></div>
+    <div class="schedule-item"><strong>00:00</strong> — <span data-i18n="sched_00">Fireworks</span></div>
+</section>
+
 <!-- RSVP -->
-<section class="section rsvp-section" id="rsvp">
-    <h2 class="section-title">RSVP</h2>
+<section class="section rsvp-section animate-up" id="rsvp">
+    <h2 class="section-title" data-i18n="rsvp">RSVP</h2>
 
     <form id="rsvpForm" method="POST">
-        <input type="text" name="entry.45681910" placeholder="Your Name" required>
+        <input type="text" name="entry.45681910" data-i18n-placeholder="your_name" placeholder="Your Name" required>
 
         <select name="entry.45734887" required>
-            <option value="">Bringing +1?</option>
-            <option>Yes</option>
-            <option>No</option>
+            <option value="" data-i18n="bringing_plus1">Bringing +1?</option>
+            <option data-i18n="yes">Yes</option>
+            <option data-i18n="no">No</option>
         </select>
 
         <select name="entry.45662509" required>
-            <option value="">Children attending?</option>
+            <option value="" data-i18n="children">Children attending?</option>
             <option>0</option><option>1</option><option>2</option><option>3+</option>
         </select>
 
         <select name="entry.45734741" required>
-            <option value="">Select Menu</option>
-            <option>Menu 1</option>
-            <option>Menu 2</option>
+            <option value="" data-i18n="select_menu">Select Menu</option>
+            <option data-i18n="menu1">Menu 1</option>
+            <option data-i18n="menu2">Menu 2</option>
         </select>
 
-        <button type="submit" class="btn-dark">Confirm Attendance</button>
-
-        <p id="confirmation" class="confirmation">Thank you! Your RSVP has been submitted.</p>
+        <button type="submit" class="btn-dark" data-i18n="confirm_attendance">Confirm Attendance</button>
+        <p id="confirmation" class="confirmation" data-i18n="thanks">Thank you! Your RSVP has been submitted.</p>
     </form>
 </section>
 

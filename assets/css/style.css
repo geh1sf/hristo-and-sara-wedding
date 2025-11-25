@@ -5,35 +5,38 @@ body {
     background: #f7f0e9;
     color: #4a3c32;
     text-align: center;
+    overflow-x: hidden;
 }
 
-.section {
-    padding: 80px 20px;
+/* LANGUAGE SWITCHER */
+#lang-switcher {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 9999;
 }
-
-.section-title {
-    font-size: 36px;
-    margin-bottom: 30px;
-}
-
-.btn-light {
+#lang-switcher button {
     background: white;
-    padding: 12px 28px;
-    border-radius: 8px;
-    color: #4a3c32;
-    font-weight: bold;
-    text-decoration: none;
+    border: 1px solid #c7b9ae;
+    padding: 6px 12px;
+    margin-left: 5px;
+    cursor: pointer;
+    border-radius: 6px;
 }
 
-/* BUTTON DARK */
-.btn-dark {
-    background: #6b594f;
-    color: white;
-    padding: 14px;
-    border-radius: 8px;
-    width: 100%;
-    font-size: 18px;
-    border: none;
+/* COUNTDOWN */
+.countdown-section {
+    padding: 50px 20px 20px;
+}
+#countdown-timer {
+    display: flex;
+    justify-content: center;
+    gap: 25px;
+    font-size: 28px;
+}
+#countdown-timer div span {
+    font-size: 42px;
+    font-weight: bold;
 }
 
 /* HERO */
@@ -46,13 +49,11 @@ body {
     background-size: cover;
     background-position: center;
 }
-
-@media (max-width: 768px) {
+@media(max-width: 768px) {
     .hero {
         background-image: var(--hero-mobile);
     }
 }
-
 .hero-content {
     color: white;
     text-shadow: 0 3px 6px rgba(0,0,0,0.4);
@@ -63,7 +64,6 @@ body {
     position: relative;
     height: 500px;
 }
-
 .slideshow img {
     width: 100%;
     max-width: 700px;
@@ -74,7 +74,6 @@ body {
     opacity: 0;
     transition: opacity 1.5s;
 }
-
 .slideshow img.active {
     opacity: 1;
 }
@@ -86,7 +85,6 @@ body {
     gap: 25px;
     flex-wrap: wrap;
 }
-
 .party-card {
     width: 240px;
     background: #fff9f3;
@@ -94,7 +92,6 @@ body {
     border-radius: 12px;
     box-shadow: 0 3px 6px rgba(0,0,0,0.15);
 }
-
 .party-card img {
     width: 100%;
     border-radius: 10px;
@@ -108,7 +105,6 @@ body {
     flex-wrap: wrap;
     margin-top: 20px;
 }
-
 .timeline-item {
     background: #fffdf9;
     width: 260px;
@@ -116,7 +112,6 @@ body {
     border-radius: 12px;
     box-shadow: 0 3px 6px rgba(0,0,0,0.12);
 }
-
 .timeline-item img {
     width: 100%;
     border-radius: 10px;
@@ -129,10 +124,18 @@ body {
     gap: 20px;
     padding: 20px;
 }
-
 .gallery-grid img {
     width: 100%;
     border-radius: 10px;
+}
+
+/* SCHEDULE */
+#schedule {
+    padding-top: 30px;
+}
+.schedule-item {
+    font-size: 22px;
+    padding: 10px 0;
 }
 
 /* RSVP */
@@ -140,15 +143,14 @@ body {
     max-width: 500px;
     margin: auto;
 }
-
-#rsvpForm input, #rsvpForm select {
+#rsvpForm input,
+#rsvpForm select {
     width: 100%;
     padding: 14px;
     margin-bottom: 20px;
     border-radius: 6px;
     border: 1px solid #ccc;
 }
-
 .confirmation {
     display: none;
     margin-top: 20px;
