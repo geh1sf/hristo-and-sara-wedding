@@ -52,21 +52,10 @@
     <div id="slideshow" class="slideshow"></div>
 </section>
 
-<!-- WEDDING PARTY -->
+<!-- WEDDING PARTY (Combined) -->
 <section class="section animate-up">
     <h2 class="section-title" data-i18n="wedding_party">Wedding Party</h2>
-
-    <h3 data-i18n="bridesmaids">Bridesmaids</h3>
-    <div id="bridesmaids" class="party-grid"></div>
-
-    <h3 data-i18n="best_men">Best Men</h3>
-    <div id="bestmen" class="party-grid"></div>
-</section>
-
-<!-- TIMELINE -->
-<section class="section animate-up">
-    <h2 class="section-title" data-i18n="timeline">Wedding Timeline</h2>
-    <div id="timeline" class="timeline"></div>
+    <div id="weddingparty" class="party-grid"></div>
 </section>
 
 <!-- GALLERY -->
@@ -92,27 +81,50 @@
     <h2 class="section-title" data-i18n="rsvp">RSVP</h2>
 
     <form id="rsvpForm" method="POST">
-        <input type="text" name="entry.45681910" data-i18n-placeholder="your_name" placeholder="Your Name" required>
 
-        <select name="entry.45734887" required>
+        <input type="text" name="entry.45681910" 
+               data-i18n-placeholder="your_name" placeholder="Your Name" required>
+
+        <!-- Bringing +1 -->
+        <select name="entry.45734887" id="plusOneSelect" required>
             <option value="" data-i18n="bringing_plus1">Bringing +1?</option>
             <option data-i18n="yes">Yes</option>
             <option data-i18n="no">No</option>
         </select>
 
+        <!-- Main Guest Menu (with tooltip) -->
+        <div class="menu-wrapper">
+            <select name="entry.45734741" id="menuMain" required>
+                <option value="">Select Menu</option>
+                <option value="Menu 1" data-tooltip="Seafood main course, fresh salad, dessert, white wine.">Menu 1</option>
+                <option value="Menu 2" data-tooltip="Beef main course, potatoes, dessert, red wine.">Menu 2</option>
+            </select>
+            <span class="tooltip"></span>
+        </div>
+
+        <!-- Children -->
         <select name="entry.45662509" required>
             <option value="" data-i18n="children">Children attending?</option>
             <option>0</option><option>1</option><option>2</option><option>3+</option>
         </select>
 
-        <select name="entry.45734741" required>
-            <option value="" data-i18n="select_menu">Select Menu</option>
-            <option data-i18n="menu1">Menu 1</option>
-            <option data-i18n="menu2">Menu 2</option>
-        </select>
+        <!-- +1 Menu (with tooltip, hidden initially) -->
+        <div class="menu-wrapper" id="plusOneWrapper" style="display:none;">
+            <select id="plusOneMenu" name="entry.plusOneMenu">
+                <option value="">Menu for +1</option>
+                <option value="Menu 1" data-tooltip="Seafood main course, fresh salad, dessert, white wine.">Menu 1</option>
+                <option value="Menu 2" data-tooltip="Beef main course, potatoes, dessert, red wine.">Menu 2</option>
+            </select>
+            <span class="tooltip"></span>
+        </div>
 
-        <button type="submit" class="btn-dark" data-i18n="confirm_attendance">Confirm Attendance</button>
-        <p id="confirmation" class="confirmation" data-i18n="thanks">Thank you! Your RSVP has been submitted.</p>
+        <button type="submit" class="btn-dark" data-i18n="confirm_attendance">
+            Confirm Attendance
+        </button>
+
+        <p id="confirmation" class="confirmation" data-i18n="thanks">
+            Thank you! Your RSVP has been submitted.
+        </p>
     </form>
 </section>
 

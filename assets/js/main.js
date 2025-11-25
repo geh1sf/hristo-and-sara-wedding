@@ -1,11 +1,11 @@
-/* ===========================================
-   LOAD IMAGES FROM JSON
-=========================================== */
+/* ==========================================================
+   IMAGE LOADER (JSON-BASED)
+========================================================== */
 async function loadImages() {
     const res = await fetch("assets/data/images.json");
     const data = await res.json();
 
-    /* HERO */
+    /* HERO BACKGROUNDS */
     document.documentElement.style.setProperty("--hero-desktop",
         `url('assets/images/hero/${data.hero[0]}')`);
     document.documentElement.style.setProperty("--hero-mobile",
@@ -20,10 +20,11 @@ async function loadImages() {
         slideshow.appendChild(img);
     });
 
-    /* BRIDESMAIDS */
-    const bridesmaids = document.getElementById("bridesmaids");
+    /* WEDDING PARTY (COMBINED) */
+    const weddingparty = document.getElementById("weddingparty");
+
     data.bridesmaids.forEach(file => {
-        bridesmaids.innerHTML += `
+        weddingparty.innerHTML += `
             <div class="party-card animate-up">
                 <img src="assets/images/bridesmaids/${file}">
                 <h3>Bridesmaid</h3>
@@ -31,25 +32,11 @@ async function loadImages() {
         `;
     });
 
-    /* BEST MEN */
-    const bestmen = document.getElementById("bestmen");
     data.bestmen.forEach(file => {
-        bestmen.innerHTML += `
+        weddingparty.innerHTML += `
             <div class="party-card animate-up">
                 <img src="assets/images/bestmen/${file}">
                 <h3>Best Man</h3>
-            </div>
-        `;
-    });
-
-    /* TIMELINE */
-    const timeline = document.getElementById("timeline");
-    data.timeline.forEach((file, idx) => {
-        timeline.innerHTML += `
-            <div class="timeline-item animate-side-${idx % 2 === 0 ? 'left' : 'right'}">
-                <img src="assets/images/timeline/${file}">
-                <h3>Event</h3>
-                <p>Description here.</p>
             </div>
         `;
     });
@@ -63,14 +50,11 @@ async function loadImages() {
     });
 }
 
-/* ===========================================
-   RUN IMAGE LOADER
-=========================================== */
 loadImages();
 
-/* ===========================================
-   SLIDESHOW
-=========================================== */
+/* ==========================================================
+   SLIDESHOW ROTATION
+========================================================== */
 setInterval(() => {
     const slides = document.querySelectorAll("#slideshow img");
     if (slides.length < 2) return;
@@ -82,9 +66,9 @@ setInterval(() => {
     next.classList.add("active");
 }, 3500);
 
-/* ===========================================
+/* ==========================================================
    COUNTDOWN TIMER
-=========================================== */
+========================================================== */
 function startCountdown() {
     const target = new Date("June 27, 2026 17:00:00 GMT+0300").getTime();
 
@@ -100,23 +84,22 @@ function startCountdown() {
         document.getElementById("seconds").textContent = Math.floor((diff / 1000) % 60);
     }, 1000);
 }
+
 startCountdown();
 
-/* ===========================================
-   MUSIC AUTOPLAY FIX
-=========================================== */
+/* ==========================================================
+   MUSIC AUTOPLAY (FIX FOR MOBILE AUTOPLAY)
+========================================================== */
 document.addEventListener("DOMContentLoaded", () => {
     const music = document.getElementById("bgMusic");
     if (!music) return;
 
     music.volume = 0.6;
 
-    // Try autoplay
     music.play().catch(() => {
-        console.log("Autoplay blocked — waiting for first interaction.");
+        console.log("Autoplay blocked — waiting for interaction.");
     });
 
-    // Force play on first interaction
     const startMusic = () => {
         music.play().catch(() => {});
         document.removeEventListener("click", startMusic);
@@ -129,9 +112,70 @@ document.addEventListener("DOMContentLoaded", () => {
     document.addEventListener("scroll", startMusic);
 });
 
-/* ===========================================
-   MULTILINGUAL SUPPORT (EN/BG)
-=========================================== */
+/* ==========================================================
+   TOOLTIP LOGIC FOR MENUS
+========================================================== */
+function attachTooltip(select) {
+    const wrapper = select.parentElement;
+    const tooltip = wrapper.querySelector(".tooltip");
+
+    select.addEventListener("change", () => {
+        const option = select.selectedOptions[0];
+        const tip = option.dataset.tooltip || "";
+        tooltip.textContent = tip;
+        tooltip.style.opacity = tip ? "1" : "0";
+    });
+
+    // For mobile tap gesture
+    select.addEventListener("touchstart", () => {
+        const option = select.selectedOptions[0];
+        tooltip.textContent = option.dataset.tooltip || "";
+        tooltip.style.opacity = "1";
+    });
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+    attachTooltip(document.getElementById("menuMain"));
+    attachTooltip(document.getElementById("plusOneMenu"));
+});
+
+/* ==========================================================
+   SHOW/HIDE +1 MENU
+========================================================== */
+document.addEventListener("DOMContentLoaded", () => {
+    const plusOneSelect = document.getElementById("plusOneSelect");
+    const plusOneWrapper = document.getElementById("plusOneWrapper");
+    const plusOneMenu = document.getElementById("plusOneMenu");
+
+    plusOneSelect.addEventListener("change", () => {
+        if (plusOneSelect.value === "Yes") {
+            plusOneWrapper.style.display = "block";
+            plusOneMenu.required = true;
+        } else {
+            plusOneWrapper.style.display = "none";
+            plusOneMenu.required = false;
+            plusOneMenu.value = "";
+        }
+    });
+});
+
+/* ==========================================================
+   FORM VALIDATION (ENSURE MENU FOR +1)
+========================================================== */
+document.getElementById("rsvpForm").addEventListener("submit", function (event) {
+    const plusOneSelect = document.getElementById("plusOneSelect");
+    const plusOneMenu = document.getElementById("plusOneMenu");
+
+    if (plusOneSelect.value === "Yes" && plusOneMenu.value === "") {
+        alert("Please select a menu option for your +1.");
+        event.preventDefault();
+        return false;
+    }
+});
+
+/* ==========================================================
+   MULTILINGUAL SYSTEM
+========================================================== */
 let currentLang = "en";
 
 async function loadTranslations(lang) {
@@ -143,7 +187,7 @@ async function loadTranslations(lang) {
     });
 
     document.querySelectorAll("[data-i18n-placeholder]").forEach(el => {
-        el.placeholder = translations[lang][el.dataset.i18n-placeholder];
+        el.placeholder = translations[lang][el.dataset.i18nPlaceholder];
     });
 }
 
@@ -158,11 +202,10 @@ document.addEventListener("DOMContentLoaded", () => {
     loadTranslations("en");
 });
 
-/* ===========================================
+/* ==========================================================
    GSAP ANIMATIONS
-=========================================== */
+========================================================== */
 document.addEventListener("DOMContentLoaded", () => {
-
     gsap.from(".hero-content", {
         opacity: 0,
         y: 40,
@@ -179,23 +222,4 @@ document.addEventListener("DOMContentLoaded", () => {
             ease: "power2.out"
         });
     });
-
-    gsap.utils.toArray(".animate-side-left").forEach(elem => {
-        gsap.from(elem, {
-            scrollTrigger: elem,
-            opacity: 0,
-            x: -80,
-            duration: 1.2
-        });
-    });
-
-    gsap.utils.toArray(".animate-side-right").forEach(elem => {
-        gsap.from(elem, {
-            scrollTrigger: elem,
-            opacity: 0,
-            x: 80,
-            duration: 1.2
-        });
-    });
-
 });
