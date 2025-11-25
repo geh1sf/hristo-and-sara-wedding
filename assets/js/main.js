@@ -10,7 +10,7 @@ async function loadImages() {
     const res = await fetch(`${ROOT}/assets/data/images.json`);
     const data = await res.json();
 
-    /* HERO BACKGROUNDS */
+    /* HERO */
     document.documentElement.style.setProperty(
         "--hero-desktop",
         `url('${ROOT}/assets/images/hero/${data.hero[0]}')`
@@ -30,7 +30,7 @@ async function loadImages() {
         slideshow.appendChild(img);
     });
 
-    /* WEDDING PARTY */
+    /* PARTY */
     const weddingparty = document.getElementById("weddingparty");
 
     data.bridesmaids.forEach(file => {
@@ -62,9 +62,8 @@ async function loadImages() {
 
 loadImages();
 
-
 /* ==========================================================
-   SLIDESHOW ROTATION
+   SLIDESHOW
 ========================================================== */
 setInterval(() => {
     const slides = document.querySelectorAll("#slideshow img");
@@ -77,9 +76,8 @@ setInterval(() => {
     next.classList.add("active");
 }, 3500);
 
-
 /* ==========================================================
-   COUNTDOWN TIMER
+   COUNTDOWN
 ========================================================== */
 function startCountdown() {
     const target = new Date("June 27, 2026 17:00:00 GMT+0300").getTime();
@@ -107,7 +105,6 @@ function startCountdown() {
 
 startCountdown();
 
-
 /* ==========================================================
    MUSIC AUTOPLAY FIX
 ========================================================== */
@@ -116,26 +113,20 @@ document.addEventListener("DOMContentLoaded", () => {
     if (!music) return;
 
     music.volume = 0.6;
-
-    music.play().catch(() => {
-        console.log("Autoplay blocked — waiting for interaction.");
-    });
+    music.play().catch(() => {});
 
     const startMusic = () => {
         music.play().catch(() => {});
         document.removeEventListener("click", startMusic);
         document.removeEventListener("touchstart", startMusic);
-        document.removeEventListener("scroll", startMusic);
     };
 
     document.addEventListener("click", startMusic);
     document.addEventListener("touchstart", startMusic);
-    document.addEventListener("scroll", startMusic);
 });
 
-
 /* ==========================================================
-   TOOLTIP LOGIC
+   TOOLTIP
 ========================================================== */
 function attachTooltip(select) {
     const wrapper = select.parentElement;
@@ -147,12 +138,6 @@ function attachTooltip(select) {
         tooltip.textContent = tip;
         tooltip.style.opacity = tip ? "1" : "0";
     });
-
-    select.addEventListener("touchstart", () => {
-        const option = select.selectedOptions[0];
-        tooltip.textContent = option.dataset.tooltip || "";
-        tooltip.style.opacity = "1";
-    });
 }
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -160,9 +145,8 @@ document.addEventListener("DOMContentLoaded", () => {
     attachTooltip(document.getElementById("plusOneMenu"));
 });
 
-
 /* ==========================================================
-   +1 LOGIC: SHOW / HIDE
+   +1 LOGIC
 ========================================================== */
 document.addEventListener("DOMContentLoaded", () => {
     const plusOneSelect = document.getElementById("plusOneSelect");
@@ -185,7 +169,6 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 });
 
-
 /* ==========================================================
    FORM VALIDATION
 ========================================================== */
@@ -195,7 +178,6 @@ document.getElementById("rsvpForm").addEventListener("submit", function (event) 
     const plusOneMenu = document.getElementById("plusOneMenu");
 
     if (plusOneSelect.value === "Yes") {
-
         if (plusOneName.value.trim() === "") {
             alert("Please enter the name of your +1.");
             event.preventDefault();
@@ -210,12 +192,9 @@ document.getElementById("rsvpForm").addEventListener("submit", function (event) 
     }
 });
 
-
 /* ==========================================================
-   MULTILINGUAL SYSTEM
+   LANGUAGE
 ========================================================== */
-let currentLang = "en";
-
 async function loadTranslations(lang) {
     const res = await fetch(`${ROOT}/assets/data/lang.json`);
     const translations = await res.json();
@@ -231,15 +210,13 @@ async function loadTranslations(lang) {
 
 document.getElementById("lang-switcher").addEventListener("click", e => {
     if (e.target.dataset.lang) {
-        currentLang = e.target.dataset.lang;
-        loadTranslations(currentLang);
+        loadTranslations(e.target.dataset.lang);
     }
 });
 
 document.addEventListener("DOMContentLoaded", () => {
     loadTranslations("en");
 });
-
 
 /* ==========================================================
    GSAP ANIMATIONS
