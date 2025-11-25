@@ -5,9 +5,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Hristo & Sara — 27 June 2026</title>
 
-<link rel="stylesheet" href="/hristo-and-sara-wedding/assets/css/style.css">
+<link rel="stylesheet" href="/assets/css/style.css">
 
-<!-- GSAP Animations -->
+<!-- GSAP -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.3/gsap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.3/ScrollTrigger.min.js"></script>
 
@@ -22,7 +22,7 @@
 
 <!-- MUSIC -->
 <audio id="bgMusic" autoplay loop>
-    <source src="/hristo-and-sara-wedding/assets/music/song.mp3" type="audio/mpeg">
+    <source src="/assets/music/song.mp3" type="audio/mpeg">
 </audio>
 
 <!-- COUNTDOWN -->
@@ -46,7 +46,7 @@
     </div>
 </header>
 
-<!-- OUR LOVE STORY -->
+<!-- LOVE STORY -->
 <section class="section animate-up">
     <h2 class="section-title" data-i18n="love_story">Our Love Story</h2>
     <div id="slideshow" class="slideshow"></div>
@@ -64,7 +64,7 @@
     <div id="gallery" class="gallery-grid"></div>
 </section>
 
-<!-- WEDDING SCHEDULE -->
+<!-- SCHEDULE -->
 <section class="section animate-up" id="schedule">
     <h2 class="section-title" data-i18n="schedule_title">Wedding Schedule</h2>
 
@@ -76,7 +76,7 @@
     <div class="schedule-item"><strong>00:00</strong> — <span data-i18n="sched_00">Fireworks</span></div>
 </section>
 
-<!-- RSVP FORM -->
+<!-- RSVP -->
 <section class="section rsvp-section animate-up" id="rsvp">
     <h2 class="section-title" data-i18n="rsvp">RSVP</h2>
 
@@ -84,27 +84,19 @@
           action="https://docs.google.com/forms/d/e/1FAIpQLSdP3RCYAEzto8rFYqPGbXhMwYN6QxGh3W0MWRgxF-MLA5P1tA/formResponse"
           target="hidden_iframe">
 
-        <!-- Your Name -->
         <input type="text" name="entry.45681910"
                placeholder="Your Name"
-               data-i18n-placeholder="your_name"
-               required>
+               data-i18n-placeholder="your_name" required>
 
-        <!-- Bringing +1 -->
         <select name="entry.45734887" id="plusOneSelect" required>
             <option value="" data-i18n="bringing_plus1">Bringing +1?</option>
             <option data-i18n="yes">Yes</option>
             <option data-i18n="no">No</option>
         </select>
 
-        <!-- +1 NAME -->
-        <input type="text"
-               id="plusOneName"
-               name="entry.45713329"
-               placeholder="Name of +1"
-               style="display:none;">
+        <input type="text" id="plusOneName" name="entry.45713329"
+               placeholder="Name of +1" style="display:none;">
 
-        <!-- Main Menu -->
         <div class="menu-wrapper">
             <select name="entry.45734741" id="menuMain" required>
                 <option value="">Select Menu</option>
@@ -114,13 +106,11 @@
             <span class="tooltip"></span>
         </div>
 
-        <!-- Children -->
         <select name="entry.45662509" required>
-            <option value="" data-i18n="children">Children attending?</option>
+            <option value="">Children attending?</option>
             <option>0</option><option>1</option><option>2</option><option>3+</option>
         </select>
 
-        <!-- +1 MENU -->
         <div class="menu-wrapper" id="plusOneMenuWrapper" style="display:none;">
             <select id="plusOneMenu" name="entry.45657263">
                 <option value="">Menu for +1</option>
@@ -146,7 +136,7 @@
     <p class="footer-text">Hristo & Sara — 27 June 2026 • Sozopol</p>
 </footer>
 
-<script src="/hristo-and-sara-wedding/assets/js/main.js"></script>
+<script src="/assets/js/main.js"></script>
 
 </body>
 </html>
