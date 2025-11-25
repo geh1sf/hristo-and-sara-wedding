@@ -216,4 +216,40 @@ async function loadTranslations(lang) {
     });
 
     document.querySelectorAll("[data-i18n-placeholder]").forEach(el => {
-        el.placeholder = translations[lang][el.datas]()
+        el.placeholder = translations[lang][el.dataset.i18nPlaceholder];
+    });
+}
+
+document.getElementById("lang-switcher").addEventListener("click", e => {
+    if (e.target.dataset.lang) {
+        currentLang = e.target.dataset.lang;
+        loadTranslations(currentLang);
+    }
+});
+
+document.addEventListener("DOMContentLoaded", () => {
+    loadTranslations("en");
+});
+
+
+/* ==========================================================
+   GSAP ANIMATIONS
+========================================================== */
+document.addEventListener("DOMContentLoaded", () => {
+    gsap.from(".hero-content", {
+        opacity: 0,
+        y: 40,
+        duration: 1.6,
+        ease: "power3.out"
+    });
+
+    gsap.utils.toArray(".animate-up").forEach(elem => {
+        gsap.from(elem, {
+            scrollTrigger: elem,
+            opacity: 0,
+            y: 50,
+            duration: 1.2,
+            ease: "power2.out"
+        });
+    });
+});
