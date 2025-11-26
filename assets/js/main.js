@@ -1,20 +1,18 @@
 /* ROOT PATH */
 const ROOT = "/hristo-and-sara-wedding";
 
-/* LOAD IMAGES */
+/* ============================================================
+   LOAD IMAGES + INIT GALLERY
+============================================================ */
 async function loadImages() {
     const res = await fetch(`${ROOT}/assets/data/images.json`);
     const data = await res.json();
 
-    document.documentElement.style.setProperty(
-        "--hero-desktop",
-        `url('${ROOT}/assets/images/hero/${data.hero[0]}')`
-    );
+    document.documentElement.style.setProperty("--hero-desktop",
+        `url('${ROOT}/assets/images/hero/${data.hero[0]}')`);
 
-    document.documentElement.style.setProperty(
-        "--hero-mobile",
-        `url('${ROOT}/assets/images/hero/${data.hero[1]}')`
-    );
+    document.documentElement.style.setProperty("--hero-mobile",
+        `url('${ROOT}/assets/images/hero/${data.hero[1]}')`);
 
     /* SLIDESHOW */
     const slideshow = document.getElementById("slideshow");
@@ -25,9 +23,8 @@ async function loadImages() {
         slideshow.appendChild(img);
     });
 
-    /* PARTY */
+    /* WEDDING PARTY */
     const weddingparty = document.getElementById("weddingparty");
-
     data.bridesmaids.forEach(file => {
         weddingparty.innerHTML += `
             <div class="party-card animate-up">
@@ -35,7 +32,6 @@ async function loadImages() {
                 <h3>Bridesmaid</h3>
             </div>`;
     });
-
     data.bestmen.forEach(file => {
         weddingparty.innerHTML += `
             <div class="party-card animate-up">
@@ -44,13 +40,8 @@ async function loadImages() {
             </div>`;
     });
 
-    /* GALLERY */
-    const gallery = document.getElementById("gallery");
-    data.gallery.forEach(file => {
-        gallery.innerHTML += `
-            <img class="animate-up" src="${ROOT}/assets/images/gallery/${file}">
-        `;
-    });
+    /* 3D CAROUSEL */
+    init3DCarousel(data.gallery);
 }
 loadImages();
 
@@ -66,24 +57,25 @@ setInterval(() => {
     next.classList.add("active");
 }, 3500);
 
-/* COUNTDOWN */
+/* ============================================================
+   COUNTDOWN
+============================================================ */
 function startCountdown() {
     const target = new Date("June 27, 2026 17:00:00 GMT+0300").getTime();
 
     setInterval(() => {
         const now = Date.now();
         const diff = target - now;
-
         if (diff <= 0) return;
 
         document.getElementById("days").textContent =
-            Math.floor(diff / (1000 * 60 * 60 * 24));
+            Math.floor(diff / 86400000);
 
         document.getElementById("hours").textContent =
-            Math.floor((diff / (1000 * 60 * 60)) % 24);
+            Math.floor((diff / 3600000) % 24);
 
         document.getElementById("minutes").textContent =
-            Math.floor((diff / (1000 * 60)) % 60);
+            Math.floor((diff / 60000) % 60);
 
         document.getElementById("seconds").textContent =
             Math.floor((diff / 1000) % 60);
@@ -92,7 +84,9 @@ function startCountdown() {
 }
 startCountdown();
 
-/* MUSIC AUTOPLAY */
+/* ============================================================
+   MUSIC AUTOPLAY
+============================================================ */
 document.addEventListener("DOMContentLoaded", () => {
     const music = document.getElementById("bgMusic");
     if (!music) return;
@@ -110,7 +104,9 @@ document.addEventListener("DOMContentLoaded", () => {
     document.addEventListener("touchstart", startMusic);
 });
 
-/* TOOLTIP */
+/* ============================================================
+   TOOLTIP
+============================================================ */
 function attachTooltip(select) {
     const wrapper = select.parentElement;
     const tooltip = wrapper.querySelector(".tooltip");
@@ -127,7 +123,9 @@ document.addEventListener("DOMContentLoaded", () => {
     attachTooltip(document.getElementById("plusOneMenu"));
 });
 
-/* +1 LOGIC */
+/* ============================================================
+   +1 LOGIC
+============================================================ */
 document.addEventListener("DOMContentLoaded", () => {
     const plusOneSelect = document.getElementById("plusOneSelect");
     const plusOneName = document.getElementById("plusOneName");
@@ -149,15 +147,17 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 });
 
-/* FORM SUBMIT CONFIRMATION */
+/* ============================================================
+   FORM CONFIRMATION
+============================================================ */
 document.getElementById("rsvpForm").addEventListener("submit", function () {
     document.getElementById("confirmation").style.display = "block";
-    setTimeout(() => {
-        this.reset();
-    }, 500);
+    setTimeout(() => this.reset(), 500);
 });
 
-/* TRANSLATIONS */
+/* ============================================================
+   TRANSLATIONS
+============================================================ */
 async function loadTranslations(lang) {
     const res = await fetch(`${ROOT}/assets/data/lang.json`);
     const translations = await res.json();
@@ -172,16 +172,16 @@ async function loadTranslations(lang) {
 }
 
 document.getElementById("lang-switcher").addEventListener("click", e => {
-    if (e.target.dataset.lang) {
-        loadTranslations(e.target.dataset.lang);
-    }
+    if (e.target.dataset.lang) loadTranslations(e.target.dataset.lang);
 });
 
 document.addEventListener("DOMContentLoaded", () => {
     loadTranslations("en");
 });
 
-/* GSAP ANIMATIONS */
+/* ============================================================
+   GSAP ANIMATIONS
+============================================================ */
 document.addEventListener("DOMContentLoaded", () => {
     gsap.from(".hero-content", {
         opacity: 0,
@@ -202,9 +202,50 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 /* ============================================================
-   PETAL GENERATOR (FULL PAGE)
+   3D CAROUSEL
 ============================================================ */
+let carouselIndex = 0;
+let carouselImages = [];
 
+function init3DCarousel(images) {
+    const container = document.getElementById("carousel3D");
+    carouselImages = images;
+
+    container.innerHTML = "";
+
+    images.forEach((src, i) => {
+        const item = document.createElement("div");
+        item.className = "carousel-item";
+        item.innerHTML = `<img src="${ROOT}/assets/images/gallery/${src}">`;
+        container.appendChild(item);
+    });
+
+    updateCarousel3D();
+    setInterval(nextCarouselImage, 3000);
+}
+
+function updateCarousel3D() {
+    const items = document.querySelectorAll(".carousel-item");
+    const total = items.length;
+
+    items.forEach((item, i) => {
+        const pos = (i - carouselIndex + total) % total;
+
+        if (pos === 0) item.className = "carousel-item active";
+        else if (pos === 1) item.className = "carousel-item right";
+        else if (pos === total - 1) item.className = "carousel-item left";
+        else item.className = "carousel-item far";
+    });
+}
+
+function nextCarouselImage() {
+    carouselIndex = (carouselIndex + 1) % carouselImages.length;
+    updateCarousel3D();
+}
+
+/* ============================================================
+   PETAL GENERATOR
+============================================================ */
 function createPetal() {
     const container = document.getElementById("petal-container");
     if (!container) return;
@@ -227,3 +268,10 @@ function createPetal() {
 }
 
 setInterval(createPetal, 350);
+
+/* Create petal layer */
+document.addEventListener("DOMContentLoaded", () => {
+    const petalLayer = document.createElement("div");
+    petalLayer.id = "petal-container";
+    document.body.appendChild(petalLayer);
+});
