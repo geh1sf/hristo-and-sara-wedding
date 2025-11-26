@@ -68,42 +68,56 @@
 <section class="section rsvp-section animate-up" id="rsvp">
     <h2 class="section-title" data-i18n="rsvp">RSVP</h2>
 
+    <!-- ✅ FIXED WORKING GOOGLE FORMS VERSION -->
     <form id="rsvpForm" method="POST"
-          action="https://docs.google.com/forms/d/e/1FAIpQLSet2BgkiXZTPyLeDv6WjHlRDuEQlESiwHIpGWlthdYjEMu52Q/viewform"
+          action="https://docs.google.com/forms/d/e/1FAIpQLSet2BgkiXZTPyLeDv6WjHlRDuEQlESiwHIpGWlthdYjEMu52Q/formResponse"
           target="hidden_iframe">
 
-        <input type="text" name="entry.45681910"
+        <!-- NAME -->
+        <input type="text"
+               name="entry.544791502"
                placeholder="Your Name"
-               data-i18n-placeholder="your_name" required>
+               data-i18n-placeholder="your_name"
+               required>
 
-        <select name="entry.45734887" id="plusOneSelect" required>
+        <!-- PLUS ONE -->
+        <select name="entry.902846486" id="plusOneSelect" required>
             <option value="" data-i18n="bringing_plus1">Bringing +1?</option>
-            <option data-i18n="yes">Yes</option>
-            <option data-i18n="no">No</option>
+            <option value="Yes" data-i18n="yes">Yes</option>
+            <option value="No" data-i18n="no">No</option>
         </select>
 
-        <input type="text" id="plusOneName" name="entry.45713329"
-               placeholder="Name of +1" style="display:none;">
+        <!-- NAME OF +1 -->
+        <input type="text"
+               id="plusOneName"
+               name="entry.2062443015"
+               placeholder="Name of +1"
+               style="display:none;">
 
+        <!-- MAIN MENU -->
         <div class="menu-wrapper">
-            <select name="entry.45734741" id="menuMain" required>
+            <select name="entry.1401677313" id="menuMain" required>
                 <option value="">Select Menu</option>
-                <option value="Menu 1" data-tooltip="Seafood main course, fresh salad, dessert, white wine.">Menu 1</option>
-                <option value="Menu 2" data-tooltip="Beef main course, potatoes, dessert, red wine.">Menu 2</option>
+                <option value="Menu 1">Menu 1</option>
+                <option value="Menu 2">Menu 2</option>
             </select>
             <span class="tooltip"></span>
         </div>
 
-        <select name="entry.45662509" required>
+        <!-- CHILDREN -->
+        <select name="entry.925384775" required>
             <option value="">Children attending?</option>
-            <option>0</option><option>1</option><option>2</option><option>3+</option>
+            <option value="0">0</option>
+            <option value="+ 1">1</option>
+            <option value="+ 2">2</option>
         </select>
 
+        <!-- MENU FOR +1 -->
         <div class="menu-wrapper" id="plusOneMenuWrapper" style="display:none;">
-            <select id="plusOneMenu" name="entry.45657263">
+            <select id="plusOneMenu" name="entry.1204705007">
                 <option value="">Menu for +1</option>
-                <option value="Menu 1" data-tooltip="Seafood main course, fresh salad, dessert, white wine.">Menu 1</option>
-                <option value="Menu 2" data-tooltip="Beef main course, potatoes, dessert, red wine.">Menu 2</option>
+                <option value="Menu 1">Menu 1</option>
+                <option value="Menu 2">Menu 2</option>
             </select>
             <span class="tooltip"></span>
         </div>
