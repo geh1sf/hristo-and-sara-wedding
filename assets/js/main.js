@@ -8,6 +8,7 @@ async function loadImages() {
     const res = await fetch(`${ROOT}/assets/data/images.json`);
     const data = await res.json();
 
+    /* HERO IMAGES */
     document.documentElement.style.setProperty("--hero-desktop",
         `url('${ROOT}/assets/images/hero/${data.hero[0]}')`);
 
@@ -43,9 +44,12 @@ async function loadImages() {
     /* 3D CAROUSEL */
     init3DCarousel(data.gallery);
 }
-loadImages();
 
-/* SLIDESHOW ROTATION */
+document.addEventListener("DOMContentLoaded", loadImages);
+
+/* ============================================================
+   SLIDESHOW ROTATION
+============================================================ */
 setInterval(() => {
     const slides = document.querySelectorAll("#slideshow img");
     if (slides.length < 2) return;
@@ -79,7 +83,6 @@ function startCountdown() {
 
         document.getElementById("seconds").textContent =
             Math.floor((diff / 1000) % 60);
-
     }, 1000);
 }
 startCountdown();
@@ -213,7 +216,7 @@ function init3DCarousel(images) {
 
     container.innerHTML = "";
 
-    images.forEach((src, i) => {
+    images.forEach((src) => {
         const item = document.createElement("div");
         item.className = "carousel-item";
         item.innerHTML = `<img src="${ROOT}/assets/images/gallery/${src}">`;
